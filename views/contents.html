@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <button id="" type="button" class="close closeX" data-dismiss="panel" onclick="toggleContent()" aria-hidden="true">&times;</button>
+        <a id="" type="button" class="close helpB" data-dismiss="panel" aria-hidden="true" href="#" data-toggle="modal" data-target="#helpModalContent"><img src="img/help_icon.png"></a>
+
+          <div id="legendHeader" class="panel-heading">
+            <h4>Contents</h4>
+          </div>
+
+          <div class="panel-group" id="accordion">
+
+            <div class="panel panel-default modal-style">
+              <div id="pHeader1" class="panel-heading">
+                <h3 class="panel-title">
+                  <a id="pTitle1" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    Layer Options
+                  </a>
+                </h3>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div id="tocDiv" class="panel-body">
+                  <div id="toggleDiv"></div>
+                </div>
+              </div>
+            </div><!-- /end layer panel -->
+
+            <div class="panel panel-default modal-style">
+            <div id="pHeader2" class="panel-heading">
+              <h3 class="panel-title">
+                <a id="pTitle2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  Transparency Options
+                </a>
+              </h3>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+              <div id="slideDiv" class="panel-body">
+                <div class="sliderTitle">Flood Area Transparency Slider</div>
+                    <div id="slider1" class="center">
+                      <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"></div>
+                        <ol class="sliderLables" data-dojo-type="dijit/form/HorizontalRuleLabels" container="bottomDecoration">
+                          <li>100%</li>
+                          <li>50%</li>
+                          <li>0%</li>
+                        </ol>
+                    </div>
+                    <br>
+                    <div class="sliderTitle">Zoning Transparency Slider</div>
+                    <div id="slider2" class="center">
+                      <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"></div>
+                        <ol class="sliderLables" data-dojo-type="dijit/form/HorizontalRuleLabels" container="bottomDecoration">
+                          <li>100%</li>
+                          <li>50%</li>
+                          <li>0%</li>
+                        </ol>
+                    </div>
+              </div>
+            </div>
+            </div><!-- /end slider panel -->
+
+            <hr>
+
+            <div id="legendDiv" class="scroll"></div>
+
+          </div><!-- /end panel group-->
+
+    </body>
+</html>
