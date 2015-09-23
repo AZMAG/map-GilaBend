@@ -1,0 +1,50 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Maricopa Association of Governments
+
+        Name:  Jack Fairfield
+        Role: Decision Support Analyst I
+        Contact:
+        Twitter:
+        From: Chandler, AZ
+
+        Name:  Vern Wolfley
+        Role: GIS Analyst/Developer
+        Contact:
+        Twitter: @vernwolfley
+        From: Litchfield Park, AZ
+
+        Name:  Jason Howard
+        Role: GIS Program Manager
+        Contact:
+        Twitter:
+        From: Chandler, AZ
+
+        Name:  Anubhav Bagley
+        Role: Information Services Manager
+        Contact:
+        Twitter:
+        From: Phoenix, AZ
+
+# THANKS
+
+    Town of Gila Bend
+
+# TECHNOLOGY COLOPHON
+
+    Standars: HTML5, CSS3,
+    Components: html5-boilerplate, ArcGIS Javascript API, Bootstrap, Bootstrap Map JS,
+    Normalize.css, jQuery, Modernizr
+
+# SITE
+    Site Name: Gila Bend Mapping Viewer
+    Site URL: http://geo.azmag.gov/maps/gilabend/
+    Version: 1.0.0
+    Last updated: 09/23/2015
+    Creation date: 09/21/2015
+    Language: English
+    Doctype: HTML5
+    IDE: Sublime Text
