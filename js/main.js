@@ -1,49 +1,74 @@
 /*! main.js | Gila Bend Zoning Website @ MAG */
-require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
-    "dojo/query", "dojo/keys", "esri/sniff", "esri/map",
-    "esri/SnappingManager", "esri/dijit/Measurement",
-    "esri/dijit/Scalebar", "esri/dijit/HomeButton",
-    "esri/dijit/LocateButton", "esri/dijit/Geocoder", "esri/graphic",
-    "esri/geometry/Multipoint", "esri/symbols/PictureMarkerSymbol",
-    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
-    "esri/dijit/Popup", "dojo/_base/array", "dojo/_base/Color",
+require([
+    "dojo/dom-construct",
+    "dojo/dom",
+    "dojo/on",
+    "dojo/parser",
+    "dojo/query",
+    "dojo/keys",
+    "dojo/_base/array",
+    "dojo/_base/Color",
+    "dojo/_base/connect",
+    "esri/sniff",
+    "esri/map",
+    "esri/SnappingManager",
+    "esri/dijit/Measurement",
+    "esri/dijit/Scalebar",
+    "esri/dijit/HomeButton",
+    "esri/dijit/LocateButton",
+    "esri/dijit/Geocoder",
+    "esri/dijit/Popup",
+    "esri/graphic",
+    "esri/geometry/Multipoint",
+    "esri/symbols/SimpleMarkerSymbol",
+    "esri/symbols/PictureMarkerSymbol",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleLineSymbol",
+    "esri/tasks/IdentifyTask",
+    "esri/tasks/IdentifyParameters",
     "esri/layers/ArcGISDynamicMapServiceLayer",
-    "esri/layers/ImageParameters", "esri/dijit/Legend",
-    "dijit/form/CheckBox", "dijit/form/HorizontalSlider",
-    "dijit/form/HorizontalRule", "dijit/form/HorizontalRuleLabels",
-    "js/vendor/bootstrapmap.min.js", "esri/dijit/BasemapToggle",
-    "esri/layers/FeatureLayer", "esri/dijit/PopupTemplate",
-    "esri/InfoTemplate", "esri/symbols/SimpleMarkerSymbol",
-    "esri/dijit/Print", "esri/tasks/PrintTemplate", "esri/request",
-    "esri/config", "dojo/domReady!"
-], function(dc, dom, on, parser, query, keys, has, Map, SnappingManager,
-    Measurement, Scalebar, HomeButton, LocateButton, Geocoder, Graphic,
-    Multipoint, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol,
-    IdentifyTask, IdentifyParameters, Popup, arrayUtils, Color,
-    ArcGISDynamicMapServiceLayer, ImageParameters, Legend, CheckBox,
-    HorizontalSlider, HorizontalRule, HorizontalRuleLabels,
-    BootstrapMap, BasemapToggle, FeatureLayer, PopupTemplate,
-    InfoTemplate, SimpleMarkerSymbol, Print, PrintTemplate, esriRequest,
-    esriConfig) {
+    "esri/layers/FeatureLayer",
+    "esri/layers/ImageParameters",
+    "esri/dijit/Legend",
+    "dijit/form/CheckBox",
+    "dijit/form/HorizontalSlider",
+    "dijit/form/HorizontalRule",
+    "dijit/form/HorizontalRuleLabels",
+    "esri/dijit/BasemapToggle",
+    "esri/dijit/PopupTemplate",
+    "esri/InfoTemplate",
+    "esri/dijit/Print",
+    "esri/tasks/PrintTemplate",
+    "esri/request",
+    "esri/config",
+
+    "js/vendor/bootstrapmap.min.js",
+    "dojo/domReady!"
+], function(dc, dom, on, parser, query, keys, arrayUtils, Color, connect, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder, Popup, Graphic, Multipoint, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, ArcGISDynamicMapServiceLayer, FeatureLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, PopupTemplate, InfoTemplate, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
+
     parser.parse();
+
     esri.config.defaults.io.proxyUrl = "proxy/proxy.ashx";
     esri.config.defaults.io.alwaysUseProxy = false;
+
     // add version and date to about.html, changed in config.js
     dom.byId("version").innerHTML = appConfig.Version;
+
     // var identifyParams;
     var tocLayers = [];
     var legendLayers = [];
     // line set up for measurement tool
-    var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(
-        SimpleLineSymbol.STYLE_SOLID, new Color([0, 128, 255]),
-        3), null);
+    var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+            new Color([0, 128, 255]), 3), null);
     // create a popup to replace the map's info window
     var fillSymbol3 = new SimpleFillSymbol(SimpleFillSymbol.STYLE_BACKWARD_DIAGONAL,
-        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color(
-            [0, 255, 255]), 2), new Color([0, 255, 255, 0.25]));
-    var pointSymbol = new SimpleMarkerSymbol("circle", 26, null, new Color(
-        [0, 0, 0, 0.25]));
+        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+            new Color([0, 255, 255]), 2),
+        new Color([0, 255, 255, 0.25]));
+    var pointSymbol = new SimpleMarkerSymbol("circle", 26, null,
+        new Color([0, 0, 0, 0.25]));
+
     var popup = new Popup({
         fillSymbol: fillSymbol3,
         // lineSymbol:
@@ -51,6 +76,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         visibleWhenEmpty: false,
         hideDelay: -1
     }, dc.create("div"));
+
     // create the map and specify the custom info window as the info window that will be used by the map
     // <!-- Get a reference to the ArcGIS Map class -->
     var map = BootstrapMap.create("mapDiv", {
@@ -65,6 +91,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         scrollWheelZoom: true
     });
     map.on("load", mapReady);
+
     var identifyHandler = map.on("click", executeIdentifyTask);
     // remove event listener on map close
     map.on("unload", executeIdentifyTask);
@@ -81,6 +108,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
     }, "mapDiv", "last"));
     homeButton._homeNode.title = "Original Extent";
     homeButton.startup();
+
     // create div for geolocatebutton
     var geoLocateButton = new LocateButton({
         map: map,
@@ -89,7 +117,8 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         id: "LocateButton"
     }, "mapDiv", "last"));
     geoLocateButton.startup();
-    //create toggle 
+
+    //create toggle
     var toggle = new BasemapToggle({
         map: map,
         visible: true,
@@ -98,6 +127,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         id: "BasemapToggle"
     }, "mapDiv", "last"));
     toggle.startup();
+
     // create geosearch widget
     var geocoder = new Geocoder({
         value: "",
@@ -108,7 +138,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         arcgisGeocoder: {
             sourceCountry: "USA",
             placeholder: "530 W PIMA ST, Gila Bend, AZ",
-            suffix: " Gila Bend, AZ" 
+            suffix: " Gila Bend, AZ"
             //searchExtent: {"xmin":-12621000,"ymin":3856151,"xmax":-12474241,"ymax":3928842,"spatialReference":{"wkid":102100}}
         },
         // geocoders:
@@ -158,7 +188,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
                 // "copyrightText": "<copyright info here>",
                 // "legendLayers": [],
                 "titleText": "Gila Bend Zoning"
-                    // "scalebarUnit": "Miles"
+                // "scalebarUnit": "Miles"
             };
             return plate;
         });
@@ -172,101 +202,98 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
     }
 
     function handleError(err) {
-            console.log("Something broke: ", err);
-        }
+        console.log("Something broke: ", err);
+    }
     //=================================================================================>
     // add layers to map
-    //Boundary Layer
-    var gbBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL +
-        "/5", {
-            id: "gbBoundary",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            visible: true,
-            opacity: 1
-        }));
-    //MPA Boundary Layer
-    var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL +
-        "/3", {
-            id: "mpaBoundary",
-            mode: FeatureLayer.MODE_ONDEMAND,
-            visible: true,
-            opacity: 1
-        }));
-    //Floodways Layer
+    // Boundary Layer
+    var gbBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/5", {
+        id: "gbBoundary",
+        mode: FeatureLayer.MODE_ONDEMAND,
+        visible: true,
+        opacity: 1
+    }));
+
+    // MPA Boundary Layer
+    var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/3", {
+        id: "mpaBoundary",
+        mode: FeatureLayer.MODE_ONDEMAND,
+        visible: true,
+        opacity: 1
+    }));
+
+    // Floodways Layer
     var gbFloodParms = new ImageParameters();
     gbFloodParms.layerIds = [1];
     gbFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(
-        appConfig.mainURL, {
-            id: "gbFlood",
-            imageParameters: gbFloodParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 0.65
-        }));
-    //Pending Floodways Layer
+    var gbFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbFlood",
+        imageParameters: gbFloodParms,
+        outFields: ["*"],
+        visible: false,
+        opacity: 0.65
+    }));
+
+    // Pending Floodways Layer
     var gbPendFloodParms = new ImageParameters();
     gbPendFloodParms.layerIds = [2];
     gbPendFloodParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbPendFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(
-        appConfig.mainURL, {
-            id: "gbPendFlood",
-            imageParameters: gbPendFloodParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 1
-        }));
-    var gbZoningParms = new ImageParameters();
-    gbZoningParms.layerIds = [7];
-    gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(
-        appConfig.mainURL, {
-            id: "gbZoning",
-            imageParameters: gbZoningParms,
-            outFields: ["*"],
-            visible: true,
-            opacity: 0.65
-        }));
-    var blockContent = 
-        "<strong>Parcel:  ${PG_APN}</strong><br>" +
-        "<strong>Area:  ${Shape_Area:NumberFormat}</strong><br>";
-    var blockTemplate = new InfoTemplate("Gila Bend Parcels",
-        blockContent);
-    var gbParcels = map.addLayer(new FeatureLayer(appConfig.mainURL +
-        "/4", {
-            id: "gbParcels",
-            visible: false,
-            opacity: 1,
-            mode: FeatureLayer.MODE_ONDEMAND,
-            infoTemplate: blockTemplate,
-            outFields: ["*"]
-        }));
-    // add new info window for Addresses
-    var addressContent =
-        "<strong>${EMPNAME}</strong><hr class='pLine'>" +
-        "${TA_ADDRESS}<br>";
-    var addressTemplate = new InfoTemplate("Address", addressContent);
-    var gbAddress = map.addLayer(new FeatureLayer(appConfig.mainURL +
-        "/0", {
-            id: "gbAddress",
-            visible: true,
-            opacity: 1,
-            mode: FeatureLayer.MODE_ONDEMAND,
-            infoTemplate: addressTemplate,
-            outFields: ["*"]
-        }));
-    //Solar Field Layer
+    var gbPendFlood = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbPendFlood",
+        imageParameters: gbPendFloodParms,
+        outFields: ["*"],
+        visible: false,
+        opacity: 1
+    }));
+
+    // Parcels Layer
+    var gbParcelsParms = new ImageParameters();
+    gbParcelsParms.layerIds = [4];
+    gbParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+    var gbParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbParcels",
+        imageParameters: gbParcelsParms,
+        outFields: ["*"],
+        visible: false,
+        opacity: 1
+    }));
+
+    // Solar Field Layer
     var gbSolarParms = new ImageParameters();
     gbSolarParms.layerIds = [6];
     gbSolarParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbSolar = map.addLayer(new ArcGISDynamicMapServiceLayer(
-        appConfig.mainURL, {
-            id: "gbSolar",
-            imageParameters: gbSolarParms,
-            outFields: ["*"],
-            visible: false,
-            opacity: 0.65
-        }));
+    var gbSolar = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbSolar",
+        imageParameters: gbSolarParms,
+        outFields: ["*"],
+        visible: false,
+        opacity: 1
+    }));
+
+    // Zoning Layer
+    var gbZoningParms = new ImageParameters();
+    gbZoningParms.layerIds = [7];
+    gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbZoning",
+        imageParameters: gbZoningParms,
+        outFields: ["*"],
+        visible: true,
+        opacity: 0.65
+    }));
+
+    // Addresses Layer
+    var addressContent = "<strong>${EMPNAME}</strong>" + "${TA_ADDRESS}<br>";
+    var addressTemplate = new InfoTemplate("Address", addressContent);
+    var gbAddress = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
+        id: "gbAddress",
+        visible: true,
+        opacity: 1,
+        mode: FeatureLayer.MODE_ONDEMAND,
+        infoTemplate: addressTemplate,
+        outFields: ["*"]
+    }));
+
     // Measurement Tool
     //=================================================================================>
     //dojo.keys.copyKey maps to CTRL on windows and Cmd on Mac., but has wrong code for Chrome on Mac
@@ -287,19 +314,20 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
     on(measurement.location, "click", killPopUp);
 
     function killPopUp() {
-            var toolName = this.dojoAttachPoint;
-            var activeTool = measurement[toolName].checked;
-            if (activeTool === true) {
-                // kill the popup
-                identifyHandler.remove();
-            }
-            if (activeTool !== true) {
-                // turn popups back on
-                identifyHandler = map.on("click", executeIdentifyTask);
-            }
+        var toolName = this.dojoAttachPoint;
+        var activeTool = measurement[toolName].checked;
+        if (activeTool === true) {
+            // kill the popup
+            identifyHandler.remove();
         }
-        
-    //TOC Layers
+        if (activeTool !== true) {
+            // turn popups back on
+            identifyHandler = map.on("click", executeIdentifyTask);
+        }
+    }
+
+    // TOC Layers
+    //=================================================================================>
     tocLayers.push({
         layer: gbBoundary,
         id: "gbBoundary",
@@ -340,7 +368,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         id: "gbParcels",
         title: "Gila Bend Parcels"
     });
-    
+
     //Add Layers to Legend
     legendLayers.push({
         layer: gbBoundary,
@@ -377,13 +405,14 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         id: "gbZoning",
         title: "Gila Bend Zoning"
     });
-    
+
     // create legend dijit
     var legend = new Legend({
         map: map,
         layerInfos: legendLayers
     }, "legendDiv");
     legend.startup();
+
     //add check boxes
     arrayUtils.forEach(tocLayers, function(layer) {
         var layerName = layer.title;
@@ -396,7 +425,9 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
                 clayer.setVisibility(!clayer.visible);
                 this.checked = clayer.visible;
             }
-        }); //end CheckBox
+        });
+        //end CheckBox
+
         //add the check box and label to the toc
         dc.place(checkBox.domNode, dom.byId("toggleDiv"));
         var checkLabel = dc.create("label", {
@@ -405,7 +436,7 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         }, checkBox.domNode, "after");
         dc.place("<br>", checkLabel, "after");
     });
-    
+
     // gbFlood Transparency Slider
     var slider1 = new HorizontalSlider({
         name: "slider1",
@@ -432,8 +463,9 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
             gbZoning.setOpacity(value2);
         }
     }, "slider2");
-    //=================================================================================>
+
     // Start Geocode Section
+    //=================================================================================>
     function geosearch() {
         var def = geocoder.find();
         def.then(function(res) {
@@ -519,174 +551,215 @@ require(["dojo/dom-construct", "dojo/dom", "dojo/on", "dojo/parser",
         "innerHTML": "Assessor Info", //text that appears in the popup for the link
         "href": "javascript: void(0);"
     }, query(".actionList", map.infoWindow.domNode)[0]);
+
     on(link, "click", function() {
         var feature = map.infoWindow.getSelectedFeature();
         var url = window.location;
         var link = "";
-        console.log(feature.attributes);
-        link = appConfig.MaricopaAssessor + feature.attributes.PG_APN;
+        // console.log(feature.attributes);
+        link = appConfig.MaricopaAssessor + feature.attributes.APN;
         window.open(link);
+    });
+
+    connect.connect(popup, "onSelectionChange", function() {
+        var graphic = popup.getSelectedFeature();
+        // console.log(graphic);
+        if (graphic) {
+            if (graphic.attributes.APN) {
+                // show link in popup info window
+                $("#infoLink").show();
+            } else {
+                // hide link in popup info window
+                $("#infoLink").hide();
+            }
+        }
     });
     // Identify Features
     //=================================================================================>
     function mapReady() {
-            //create identify tasks and setup parameters
-            // zoning Layer
-            identifyTask1 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask1 = new IdentifyParameters();
-            identifyParamsTask1.layerIds = [7];
-            identifyParamsTask1.tolerance = 3;
-            identifyParamsTask1.returnGeometry = true;
-            identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask1.width = map.width;
-            identifyParamsTask1.height = map.height;
-            // parcel layer
-            identifyTask2 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask2 = new IdentifyParameters();
-            identifyParamsTask2.layerIds = [4];
-            identifyParamsTask2.tolerance = 3;
-            identifyParamsTask2.returnGeometry = true;
-            identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask2.width = map.width;
-            identifyParamsTask2.height = map.height;
-            // flood zone layer
-            identifyTask3 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask3 = new IdentifyParameters();
-            identifyParamsTask3.layerIds = [1];
-            identifyParamsTask3.tolerance = 3;
-            identifyParamsTask3.returnGeometry = true;
-            identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask3.width = map.width;
-            identifyParamsTask3.height = map.height;
-            // pending flood zone layer
-            identifyTask4 = new IdentifyTask(appConfig.mainURL);
-            identifyParamsTask4 = new IdentifyParameters();
-            identifyParamsTask4.layerIds = [2];
-            identifyParamsTask4.tolerance = 3;
-            identifyParamsTask4.returnGeometry = true;
-            identifyParamsTask4.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
-            identifyParamsTask4.width = map.width;
-            identifyParamsTask4.height = map.height;
-        } // end mapReady
+        //create identify tasks and setup parameters
+        // zoning Layer
+        identifyTask1 = new IdentifyTask(appConfig.mainURL);
+        identifyParamsTask1 = new IdentifyParameters();
+        identifyParamsTask1.layerIds = [7];
+        identifyParamsTask1.tolerance = 3;
+        identifyParamsTask1.returnGeometry = true;
+        identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+        identifyParamsTask1.width = map.width;
+        identifyParamsTask1.height = map.height;
+        // parcel layer
+        identifyTask2 = new IdentifyTask(appConfig.mainURL);
+        identifyParamsTask2 = new IdentifyParameters();
+        identifyParamsTask2.layerIds = [4];
+        identifyParamsTask2.tolerance = 3;
+        identifyParamsTask2.returnGeometry = true;
+        identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+        identifyParamsTask2.width = map.width;
+        identifyParamsTask2.height = map.height;
+        // flood zone layer
+        identifyTask3 = new IdentifyTask(appConfig.mainURL);
+        identifyParamsTask3 = new IdentifyParameters();
+        identifyParamsTask3.layerIds = [1];
+        identifyParamsTask3.tolerance = 3;
+        identifyParamsTask3.returnGeometry = true;
+        identifyParamsTask3.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+        identifyParamsTask3.width = map.width;
+        identifyParamsTask3.height = map.height;
+        // pending flood zone layer
+        identifyTask4 = new IdentifyTask(appConfig.mainURL);
+        identifyParamsTask4 = new IdentifyParameters();
+        identifyParamsTask4.layerIds = [2];
+        identifyParamsTask4.tolerance = 3;
+        identifyParamsTask4.returnGeometry = true;
+        identifyParamsTask4.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+        identifyParamsTask4.width = map.width;
+        identifyParamsTask4.height = map.height;
+    } // end mapReady
 
     function executeIdentifyTask(event) {
-            var layers = map.layerIds;
-            var vis = tocLayers;
-            // find out what layers are visible
-            for (var i = 0; i < vis.length; i++) {
-                var visible = vis[i].layer.visible;
-                var name = vis[i].id;
-                if (name === "gbZoning" && visible === true) {
-                    identifyParamsTask1.layerIds = [7];
-                }
-                if (name === "gbZoning" && visible === false) {
-                    identifyParamsTask1.layerIds = [-1];
-                }
-                if (name === "tParcels" && visible === true) {
-                    identifyParamsTask2.layerIds = [1];
-                }
-                if (name === "tParcels" && visible === false) {
-                    identifyParamsTask2.layerIds = [-1];
-                }
-                if (name === "gbFlood" && visible === true) {
-                    identifyParamsTask3.layerIds = [1];
-                }
-                if (name === "gbFlood" && visible === false) {
-                    identifyParamsTask3.layerIds = [-1];
-                }
-                if (name === "gbPendFlood" && visible === true) {
-                    identifyParamsTask4.layerIds = [2];
-                }
-                if (name === "gbPendFlood" && visible === false) {
-                    identifyParamsTask4.layerIds = [-1];
-                }
+        var layers = map.layerIds;
+        var vis = tocLayers;
+        // find out what layers are visible
+        // turns off popup if layer is not visible
+        for (var i = 0; i < vis.length; i++) {
+            var visible = vis[i].layer.visible;
+            var name = vis[i].id;
+            if (name === "gbZoning" && visible === true) {
+                identifyParamsTask1.layerIds = [7];
             }
-            identifyParamsTask1.geometry = event.mapPoint;
-            identifyParamsTask1.mapExtent = map.extent;
-            identifyParamsTask2.geometry = event.mapPoint;
-            identifyParamsTask2.mapExtent = map.extent;
-            identifyParamsTask3.geometry = event.mapPoint;
-            identifyParamsTask3.mapExtent = map.extent;
-            identifyParamsTask4.geometry = event.mapPoint;
-            identifyParamsTask4.mapExtent = map.extent;
-            var deferred1 = identifyTask1.execute(identifyParamsTask1).addCallback(
-                function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName =
-                            result.layerName;
-                        if (feature.attributes.OBJECTID !==
-                            0) {
-                            var template = new InfoTemplate();
-                            //Gila Bend zoning
-                            template.setTitle(
-                                "Gila Bend Zoning");
-                            template.setContent(
-                                "Zoning Code: ${ZONING}" +
-                                "<br>Zoning Description: ${DESCRIPTION}" +
-                                "<br>Area: ${Shape_Area:NumberFormat}"
-                            );
-                            feature.setInfoTemplate(
-                                template);
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
-            var deferred3 = identifyTask3.execute(identifyParamsTask3).addCallback(
-                function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName =
-                            result.layerName;
-                        if (feature.attributes.OBJECTID !==
-                            0) {
-                            var template = new InfoTemplate();
-                            // Gila Bend zoning
-                            template.setTitle("Flood Zone");
-                            template.setContent(
-                                "Flood Zone: ${ZONE}");
-                            feature.setInfoTemplate(
-                                template);
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
-            var deferred4 = identifyTask4.execute(identifyParamsTask4).addCallback(
-                function(response) {
-                    // response is an array of identify result objects
-                    // Let's return an array of features.
-                    return arrayUtils.map(response, function(result) {
-                        var feature = result.feature;
-                        feature.attributes.layerName =
-                            result.layerName;
-                        if (feature.attributes.OBJECTID !==
-                            0) {
-                            var template = new InfoTemplate();
-                            // Gila Bend zoning
-                            template.setTitle(
-                                "Pending Flood Zone");
-                            template.setContent(
-                                "Pending Flood Zone: ${FloodZone}"
-                            );
-                            feature.setInfoTemplate(
-                                template);
-                        } // end if
-                        return feature;
-                    });
-                }); //end addCallback
-            // InfoWindow expects an array of features from each deferred
-            // object that you pass. If the response from the task execution
-            // above is not an array of features, then you need to add a callback
-            // like the one above to post-process the response and return an
-            // array of features.
-            map.infoWindow.setFeatures([deferred1, deferred3, deferred4]);
-            map.infoWindow.show(event.mapPoint);
-        } // end executeIdentifyTask
+            if (name === "gbZoning" && visible === false) {
+                identifyParamsTask1.layerIds = [-1];
+            }
+            if (name === "gbParcels" && visible === true) {
+                identifyParamsTask2.layerIds = [4];
+            }
+            if (name === "gbParcels" && visible === false) {
+                identifyParamsTask2.layerIds = [-1];
+            }
+            if (name === "gbFlood" && visible === true) {
+                identifyParamsTask3.layerIds = [1];
+            }
+            if (name === "gbFlood" && visible === false) {
+                identifyParamsTask3.layerIds = [-1];
+            }
+            if (name === "gbPendFlood" && visible === true) {
+                identifyParamsTask4.layerIds = [2];
+            }
+            if (name === "gbPendFlood" && visible === false) {
+                identifyParamsTask4.layerIds = [-1];
+            }
+        }
+        identifyParamsTask1.geometry = event.mapPoint;
+        identifyParamsTask1.mapExtent = map.extent;
+
+        identifyParamsTask2.geometry = event.mapPoint;
+        identifyParamsTask2.mapExtent = map.extent;
+
+        identifyParamsTask3.geometry = event.mapPoint;
+        identifyParamsTask3.mapExtent = map.extent;
+
+        identifyParamsTask4.geometry = event.mapPoint;
+        identifyParamsTask4.mapExtent = map.extent;
+
+        var deferred1 = identifyTask1.execute(identifyParamsTask1).addCallback(
+            function(response) {
+                // response is an array of identify result objects
+                // Let's return an array of features.
+                return arrayUtils.map(response, function(result) {
+                    var feature = result.feature;
+                    feature.attributes.layerName =
+                        result.layerName;
+                    if (feature.attributes.OBJECTID !== 0) {
+                        var template = new InfoTemplate();
+                        //Gila Bend zoning
+                        template.setTitle(
+                            "Gila Bend Zoning");
+                        template.setContent(
+                            "Zoning Code: ${ZONING}" +
+                            "<br>Zoning Description: ${DESCRIPTION}"
+                        );
+                        feature.setInfoTemplate(
+                            template);
+                    } // end if
+                    return feature;
+                });
+            }); //end addCallback
+
+        var deferred2 = identifyTask2.execute(identifyParamsTask2).addCallback(
+            function(response) {
+                // response is an array of identify result objects
+                // Let's return an array of features.
+                return arrayUtils.map(response, function(result) {
+                    var feature = result.feature;
+                    feature.attributes.layerName =
+                        result.layerName;
+                    if (feature.attributes.OBJECTID !== 0) {
+                        var template = new InfoTemplate();
+                        //Gila Bend zoning
+                        template.setTitle(
+                            "County Parcels");
+                        template.setContent(
+                            "Parcel: ${APN}"
+                        );
+                        feature.setInfoTemplate(
+                            template);
+                    } // end if
+                    return feature;
+                });
+            }); //end addCallback
+
+        var deferred3 = identifyTask3.execute(identifyParamsTask3).addCallback(
+            function(response) {
+                // response is an array of identify result objects
+                // Let's return an array of features.
+                return arrayUtils.map(response, function(result) {
+                    var feature = result.feature;
+                    feature.attributes.layerName =
+                        result.layerName;
+                    if (feature.attributes.OBJECTID !== 0) {
+                        var template = new InfoTemplate();
+                        // Gila Bend zoning
+                        template.setTitle("Flood Zone");
+                        template.setContent(
+                            "Flood Zone: ${FloodZone}");
+                        feature.setInfoTemplate(
+                            template);
+                    } // end if
+                    return feature;
+                });
+            }); //end addCallback
+        var deferred4 = identifyTask4.execute(identifyParamsTask4).addCallback(
+            function(response) {
+                // response is an array of identify result objects
+                // Let's return an array of features.
+                return arrayUtils.map(response, function(result) {
+                    var feature = result.feature;
+                    feature.attributes.layerName =
+                        result.layerName;
+                    if (feature.attributes.OBJECTID !== 0) {
+                        var template = new InfoTemplate();
+                        // Gila Bend zoning
+                        template.setTitle(
+                            "Pending Flood Zone");
+                        template.setContent(
+                            "Pending Flood Zone: ${FloodZone}"
+                        );
+                        feature.setInfoTemplate(
+                            template);
+                    } // end if
+                    return feature;
+                });
+            }); //end addCallback
+        // InfoWindow expects an array of features from each deferred
+        // object that you pass. If the response from the task execution
+        // above is not an array of features, then you need to add a callback
+        // like the one above to post-process the response and return an
+        // array of features.
+        map.infoWindow.setFeatures([deferred1, deferred2, deferred3, deferred4]);
+        map.infoWindow.show(event.mapPoint);
+    } // end executeIdentifyTask
 }); // end Main Function
+
 // contents open
 //=================================================================================>
 function toggleContent() {
@@ -705,8 +778,8 @@ $(document).ready(function() {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
     $("#legend").draggable({
-            containment: "#mapDiv"
-        });
+        containment: "#mapDiv"
+    });
     contentsOpen = $("#contentsOpen").height();
     $("#contentsOpen").click(function() {
         toggleContent();
@@ -761,13 +834,12 @@ function togglePrint() {
 //=================================================================================>
 function toggleReportWindow() {
     if ($("#reportTool").is(":hidden")) {
-            console.log("test");
+        // console.log("test");
         $("#reportTool").fadeIn();
         $("#reportTool").draggable({
             containment: "#mapDiv"
         });
-    } 
-    else {
+    } else {
         $("#reportTool").fadeOut();
         $("#reportOpen");
     }

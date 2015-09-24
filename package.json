@@ -1,20 +1,22 @@
 {
-    "name": "GilaBend-Project",
-    "version": "1.0.0",
-    "date": "09/23/2015",
-    "author": "Vern Wolfley",
-    "email": "vwolfley@azmag.gov",
-    "url": "http://geo.azmag.gov/maps/gilabend/",
-    "private": true,
-
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-cssmin": "*",
-        "grunt-contrib-jshint": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "matchdep": "*",
-        "jshint-stylish-ex": "*",
-        "grunt-contrib-concat": "*"
-    }
+  "name": "GilaBend-Project",
+  "version": "1.0.0",
+  "date": "09/24/2015",
+  "author": "Vern Wolfley",
+  "email": "vwolfley@azmag.gov",
+  "url": "http://geo.azmag.gov/maps/gilabend/",
+  "private": true,
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "matchdep": "*",
+    "jshint-stylish-ex": "*",
+    "grunt-contrib-concat": "*"
+  },
+  "dependencies": {
+    "normalize.css": "^3.0.3"
+  }
 }

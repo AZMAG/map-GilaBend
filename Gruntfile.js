@@ -1,4 +1,4 @@
-module.exports = function(grunt){
+module.exports = function(grunt) {
 
     "use strict";
 
@@ -8,37 +8,37 @@ module.exports = function(grunt){
 
         pkg: grunt.file.readJSON("package.json"),
         bannercss: '/*!\n' +
-                        '*@concat.min.css\n' +
-                        '*@CSS Document for Wickenburg Zoning Map Viewer @ MAG\n' +
-                        '*@For Production\n' +
-                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-                        '*@author <%= pkg.author %>\n' +
-                    '*/\n',
+            ' * @concat.min.css\n' +
+            ' * @CSS Document for Gila Bend Map Viewer @ MAG\n' +
+            ' * @For Production\n' +
+            ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+            ' * @author <%= pkg.author %>\n' +
+            '*/\n',
 
         bannerjs: '/*!\n' +
-                        '*@main.min.js\n' +
-                        '*@JavaScript document for Wickenburg Zoning Map Viewer @ MAG\n' +
-                        '*@For Production\n' +
-                        '*@<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-                        '*@author <%= pkg.author %>\n' +
-                    '*/\n',
+            ' * @main.min.js\n' +
+            ' * @JavaScript document for Gila Bend Map Viewer @ MAG\n' +
+            ' * @For Production\n' +
+            ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
+            ' * @author <%= pkg.author %>\n' +
+            '*/\n',
 
         jshint: {
             files: ["js/config.js", "js/main.js"],
-                options: {
-                    // strict: true,
-                    sub: true,
-                    quotmark: "double",
-                    trailing: true,
-                    curly: true,
-                    eqeqeq: true,
-                    unused: true,
-                    scripturl: true,    // This option defines globals exposed by the Dojo Toolkit.
-                    dojo: true,        // This option defines globals exposed by the jQuery JavaScript library.
-                    jquery: true,     // Set force to true to report JSHint errors but not fail the task.
-                    force: true,
-                    reporter: require("jshint-stylish-ex")
-                }
+            options: {
+                // strict: true,
+                sub: true,
+                quotmark: "double",
+                trailing: true,
+                curly: true,
+                eqeqeq: true,
+                unused: true,
+                scripturl: true, // This option defines globals exposed by the Dojo Toolkit.
+                dojo: true, // This option defines globals exposed by the jQuery JavaScript library.
+                jquery: true, // Set force to true to report JSHint errors but not fail the task.
+                force: true,
+                reporter: require("jshint-stylish-ex")
+            }
         },
 
         uglify: {
@@ -56,7 +56,7 @@ module.exports = function(grunt){
         cssmin: {
             add_banner: {
                 options: {
-                // add banner to top of output file
+                    // add banner to top of output file
                     banner: '/* <%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %> */\n'
                 },
                 files: {
@@ -69,24 +69,24 @@ module.exports = function(grunt){
 
         concat: {
             options: {
-              stripBanners: true,
-              banner: '<%= bannercss %>\n'
+                stripBanners: true,
+                banner: '<%= bannercss %>\n'
             },
             dist: {
-              src: ["css/normalize.min.css", "css/bootstrapmap.min.css", "css/main.min.css"],
-              dest: 'css/concat.min.css'
+                src: ["css/normalize.min.css", "css/bootstrapmap.min.css", "css/main.min.css"],
+                dest: 'css/concat.min.css'
             }
         },
 
         watch: {
-          scripts: {
-            files: ["js/main.js", "js/config.js", "Gruntfile.js"],
-            tasks: ["jshint"],
-            options: {
-              spawn: false,
-              interrupt: true,
+            scripts: {
+                files: ["js/main.js", "js/config.js", "Gruntfile.js"],
+                tasks: ["jshint"],
+                options: {
+                    spawn: false,
+                    interrupt: true,
+                },
             },
-          },
         },
 
     });
@@ -107,4 +107,3 @@ module.exports = function(grunt){
 // http://coding.smashingmagazine.com/2013/10/29/get-up-running-grunt/
 // http://csslint.net/about.html
 // http://www.jshint.com/docs/options/
-
