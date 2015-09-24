@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         bannercss: '/*!\n' +
             ' * @concat.min.css\n' +
-            ' * @CSS Document for Wickenburg Zoning Map Viewer @ MAG\n' +
+            ' * @CSS Document for Gila Bend Map Viewer @ MAG\n' +
             ' * @For Production\n' +
             ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
             ' * @author <%= pkg.author %>\n' +
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
         bannerjs: '/*!\n' +
             ' * @main.min.js\n' +
-            ' * @JavaScript document for Wickenburg Zoning Map Viewer @ MAG\n' +
+            ' * @JavaScript document for Gila Bend Map Viewer @ MAG\n' +
             ' * @For Production\n' +
             ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
             ' * @author <%= pkg.author %>\n' +
