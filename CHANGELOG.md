@@ -10,7 +10,9 @@ CHANGELOG Town of Gila Bend Mapping Website
 
 ### Version 1.0.0 (09/24/2015)
 
-*
+
+* removed unused outdated files
+* added browsehappy to detect old browsers
 * updated respond.js to `v1.4.2` [respond.js] (https://cdnjs.com/libraries/)
 * updated html5shiv to `v3.7.3` [html5shiv] (https://cdnjs.com/libraries/html5shiv)
 * updated modernizer to `v2.8.3` [modernizer cdn] (http://cdnjs.com/libraries/modernizr)
