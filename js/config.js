@@ -1,13 +1,13 @@
 var appConfig = new function() {
 
-    this.Version = "";
-	
+    this.Version = "v1.0.0 | 09/24/2015";
+
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
-	
+
     this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/GilaBend/MapServer";
-	
+
     this.MaricopaAssessor = "http://mcassessor.maricopa.gov/?s=";
-	
+
     this.GeometryService = "http://geo.azmag.gov/gismag/rest/services/Utilities/Geometry/GeometryServer"; // MAGs service
 
     this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/Wickenburg_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service

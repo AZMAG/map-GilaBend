@@ -1,5 +1,5 @@
 /*!
-* Bootstrap-map-js v3.x by ESRI
+* Bootstrap-map-js v3.9 by ESRI
 * https://github.com/Esri/bootstrap-map-js
 * Copyright 2013 ESRI
 * Licensed under http://www.apache.org/licenses/LICENSE-2.0
