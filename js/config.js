@@ -19,6 +19,8 @@ var appConfig = new function() {
         "ymax": 3928842,
         "spatialReference": {
             "wkid": 102100
-        }	}
+        }	
+    };
+    
     this.center = [-112.717, 32.979];
 }; //End Config
