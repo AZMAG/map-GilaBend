@@ -7,6 +7,13 @@ CHANGELOG Town of Gila Bend Mapping Website
 
 ### Version x.x.x (xx/xx/2015)
 
+### Version 1.0.2 (10/13/2015)
+
+* fixed version issues
+
+### Version 1.0.1 (10/13/2015)
+
+* fixed email address
 
 ### Version 1.0.0 (09/24/2015)
 
