@@ -206,18 +206,29 @@ require([
     }
     //=================================================================================>
     // add layers to map
+    var mpaBoundaryParms = new ImageParameters();
+    mpaBoundaryParms.layerIds = [7];
+    mpaBoundaryParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+    var mpaBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {     
+        id: "mpaBoundary",
+        imageParameters: mpaBoundaryParms,
+        outFields: ["*"],
+        visible: true,
+        opacity: 0.65
+    }));
 
-        // Zoning Layer
+    // Zoning Layer
     var gbZoningParms = new ImageParameters();
     gbZoningParms.layerIds = [6];
     gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {     
         id: "gbZoning",
         imageParameters: gbZoningParms,
         outFields: ["*"],
         visible: true,
         opacity: 0.95
     }));
+
     // Boundary Layer
     var gbBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/4", {
         id: "gbBoundary",
@@ -227,12 +238,14 @@ require([
     }));
 
     // MPA Boundary Layer
-    var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/7", {
-        id: "mpaBoundary",
-        mode: FeatureLayer.MODE_ONDEMAND,
-        visible: true,
-        opacity: .45
-    }));
+    // var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/7", {
+    //     id: "mpaBoundary",
+    //     mode: FeatureLayer.MODE_ONDEMAND,
+    //     visible: true,
+    //     opacity: .45
+    // }));
+
+
 
     // Floodways Layer
     var gbFloodParms = new ImageParameters();
