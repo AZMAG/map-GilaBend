@@ -206,8 +206,20 @@ require([
     }
     //=================================================================================>
     // add layers to map
+
+        // Zoning Layer
+    var gbZoningParms = new ImageParameters();
+    gbZoningParms.layerIds = [6];
+    gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
+        id: "gbZoning",
+        imageParameters: gbZoningParms,
+        outFields: ["*"],
+        visible: true,
+        opacity: 0.95
+    }));
     // Boundary Layer
-    var gbBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/5", {
+    var gbBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/4", {
         id: "gbBoundary",
         mode: FeatureLayer.MODE_ONDEMAND,
         visible: true,
@@ -215,11 +227,11 @@ require([
     }));
 
     // MPA Boundary Layer
-    var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/3", {
+    var mpaBoundary = map.addLayer(new FeatureLayer(appConfig.mainURL + "/7", {
         id: "mpaBoundary",
         mode: FeatureLayer.MODE_ONDEMAND,
         visible: true,
-        opacity: 1
+        opacity: .45
     }));
 
     // Floodways Layer
@@ -248,7 +260,7 @@ require([
 
     // Parcels Layer
     var gbParcelsParms = new ImageParameters();
-    gbParcelsParms.layerIds = [4];
+    gbParcelsParms.layerIds = [3];
     gbParcelsParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
     var gbParcels = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
         id: "gbParcels",
@@ -260,7 +272,7 @@ require([
 
     // Solar Field Layer
     var gbSolarParms = new ImageParameters();
-    gbSolarParms.layerIds = [6];
+    gbSolarParms.layerIds = [5];
     gbSolarParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
     var gbSolar = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
         id: "gbSolar",
@@ -270,24 +282,14 @@ require([
         opacity: 1
     }));
 
-    // Zoning Layer
-    var gbZoningParms = new ImageParameters();
-    gbZoningParms.layerIds = [7];
-    gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
-        id: "gbZoning",
-        imageParameters: gbZoningParms,
-        outFields: ["*"],
-        visible: true,
-        opacity: 0.65
-    }));
+
 
     // Addresses Layer
     var addressContent = "<strong>${EMPNAME}</strong>" + "${TA_ADDRESS}<br>";
     var addressTemplate = new InfoTemplate("Address", addressContent);
     var gbAddress = map.addLayer(new FeatureLayer(appConfig.mainURL + "/0", {
         id: "gbAddress",
-        visible: true,
+        visible: false,
         opacity: 1,
         mode: FeatureLayer.MODE_ONDEMAND,
         infoTemplate: addressTemplate,
@@ -331,85 +333,92 @@ require([
     tocLayers.push({
         layer: gbBoundary,
         id: "gbBoundary",
-        title: "Gila Bend Boundary"
+        title: "Incorporated Area"
     });
     tocLayers.push({
         layer: mpaBoundary,
         id: "mpaBoundary",
-        title: "Municipal Planning Area Boundary"
+        title: "Municipal Planning Area"
     });
     tocLayers.push({
         layer: gbFlood,
         id: "gbFlood",
-        title: "Gila Bend Flood Zone"
+        title: "Flood Zone"
     });
     tocLayers.push({
         layer: gbPendFlood,
         id: "gbPendFlood",
-        title: "Gila Bend Pending Flood Zone"
+        title: "Pending Flood Zone"
     });
     tocLayers.push({
         layer: gbSolar,
         id: "gbSolar",
-        title: "Gila Bend Solar Field Overlay"
+        title: "Solar Field Overlay"
     });
     tocLayers.push({
         layer: gbZoning,
         id: "gbZoning",
-        title: "Gila Bend Zoning"
+        title: "Zoning"
     });
     tocLayers.push({
         layer: gbAddress,
         id: "gbAddress",
-        title: "Gila Bend Addresses"
+        title: "Address Points"
     });
     tocLayers.push({
         layer: gbParcels,
         id: "gbParcels",
-        title: "Gila Bend Parcels"
+        title: "Parcels"
     });
 
     //Add Layers to Legend
     legendLayers.push({
         layer: gbBoundary,
         id: "gbBoundary",
-        title: "Gila Bend Town Boundary"
+        title: "Town Boundary"
     });
     legendLayers.push({
         layer: mpaBoundary,
         id: "mpaBoundary",
-        title: "Municipal Planning Area Boundary"
+        title: "Municipal Planning Area"
     });
     legendLayers.push({
         layer: gbFlood,
         id: "gbFlood",
-        title: "Gila Bend Flood Zone"
+        title: "Flood Zone"
     });
     legendLayers.push({
         layer: gbPendFlood,
         id: "gbPendFlood",
-        title: "Gila Bend Pending Flood Zone"
+        title: "Pending Flood Zone"
     });
     legendLayers.push({
         layer: gbSolar,
         id: "gbSolar",
-        title: "Gila Bend Solar Field Overlay"
+        title: "Solar Field Overlay"
     });
     legendLayers.push({
         layer: gbParcels,
         id: "gbParcels",
-        title: "Gila Bend Parcels"
+        title: "Parcels"
+    });
+    legendLayers.push({
+        layer: gbAddress,
+        id: "gbAddress",
+        title: "Address Points"
     });
     legendLayers.push({
         layer: gbZoning,
         id: "gbZoning",
-        title: "Gila Bend Zoning"
+        title: "Zoning"
     });
+
 
     // create legend dijit
     var legend = new Legend({
         map: map,
-        layerInfos: legendLayers
+        layerInfos: legendLayers,
+        defaultSymbol: false
     }, "legendDiv");
     legend.startup();
 
@@ -424,10 +433,25 @@ require([
                 var clayer = map.getLayer(this.value);
                 clayer.setVisibility(!clayer.visible);
                 this.checked = clayer.visible;
+                if (this.value === 'gbZoning') {
+                    if (this.checked) {
+                    $("#zoneDefinitionsLink").show();
+                    }
+                else{
+                    $("#zoneDefinitionsLink").hide();
+                }
+                }
+                if (this.value === 'gbFlood' || this.value === 'gbPendFlood') {
+                    if (map.getLayer('gbFlood').visible || map.getLayer('gbPendFlood').visible) {
+                    $("#floodZoneDefinitionsLink").show();
+                    }
+                    else{
+                    $("#floodZoneDefinitionsLink").hide();
+                }
+                }
             }
         });
         //end CheckBox
-
         //add the check box and label to the toc
         dc.place(checkBox.domNode, dom.byId("toggleDiv"));
         var checkLabel = dc.create("label", {
@@ -563,7 +587,6 @@ require([
 
     connect.connect(popup, "onSelectionChange", function() {
         var graphic = popup.getSelectedFeature();
-        // console.log(graphic);
         if (graphic) {
             if (graphic.attributes.APN) {
                 // show link in popup info window
@@ -577,11 +600,13 @@ require([
     // Identify Features
     //=================================================================================>
     function mapReady() {
+        $(".esriSimpleSliderDecrementButton").addClass("esriSimpleSliderDisabledButton");
+
         //create identify tasks and setup parameters
         // zoning Layer
         identifyTask1 = new IdentifyTask(appConfig.mainURL);
         identifyParamsTask1 = new IdentifyParameters();
-        identifyParamsTask1.layerIds = [7];
+        identifyParamsTask1.layerIds = [6];
         identifyParamsTask1.tolerance = 3;
         identifyParamsTask1.returnGeometry = true;
         identifyParamsTask1.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
@@ -590,7 +615,7 @@ require([
         // parcel layer
         identifyTask2 = new IdentifyTask(appConfig.mainURL);
         identifyParamsTask2 = new IdentifyParameters();
-        identifyParamsTask2.layerIds = [4];
+        identifyParamsTask2.layerIds = [3];
         identifyParamsTask2.tolerance = 3;
         identifyParamsTask2.returnGeometry = true;
         identifyParamsTask2.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
@@ -625,13 +650,13 @@ require([
             var visible = vis[i].layer.visible;
             var name = vis[i].id;
             if (name === "gbZoning" && visible === true) {
-                identifyParamsTask1.layerIds = [7];
+                identifyParamsTask1.layerIds = [6];
             }
             if (name === "gbZoning" && visible === false) {
                 identifyParamsTask1.layerIds = [-1];
             }
             if (name === "gbParcels" && visible === true) {
-                identifyParamsTask2.layerIds = [4];
+                identifyParamsTask2.layerIds = [3];
             }
             if (name === "gbParcels" && visible === false) {
                 identifyParamsTask2.layerIds = [-1];
@@ -721,7 +746,9 @@ require([
                         // Gila Bend zoning
                         template.setTitle("Flood Zone");
                         template.setContent(
-                            "Flood Zone: ${FloodZone}");
+                            "Flood Zone: ${FloodZone}" +
+                            "<br>Description: ${FloodZoneD}"
+                            );
                         feature.setInfoTemplate(
                             template);
                     } // end if
@@ -807,7 +834,7 @@ $(document).ready(function() {
     $("#measureOpen").fadeTo("slow");
     $("#mTool").fadeTo("slow");
     measureOpen = $("#measureOpen").height();
-    $("#mTool").css("top", measureOpen);
+    $("#mTool").css("top", "55px");
     $("#measureOpen").click(function() {
         toggleMTool();
     });
@@ -834,7 +861,6 @@ function togglePrint() {
 //=================================================================================>
 function toggleReportWindow() {
     if ($("#reportTool").is(":hidden")) {
-        // console.log("test");
         $("#reportTool").fadeIn();
         $("#reportTool").draggable({
             containment: "#mapDiv"
@@ -877,6 +903,8 @@ $(document).ready(function() {
     $("#legalDisclaimer").load("views/legalDisclaimer.html");
     //*** Definitions modal binding
     $("#definitions").load("views/definitions.html");
+    //*** Definitions modal binding
+    $("#floodDefinitions").load("views/floodDefinitions.html");
     //*** Measurement Tool binding
     $("#mTool").load("views/measureTool.html");
     //*** Measurement Tool Help modal binding

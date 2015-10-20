@@ -37,25 +37,11 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css">
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
 
-    <!-- CSS for debugging -->
-    <!-- <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrapmap.css">
-    <link rel="stylesheet" href="css/main.css"> -->
-
-    <!-- Custom styles for this template -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/concat.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body class="tundra">
-    <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
 <!-- NAVBAR -->
 <!--==============================================================-->
@@ -73,7 +59,7 @@
           <ul class="nav navbar-nav">
             <li class="" role="button"><a href="http://www.gilabendaz.org/" title="home">Home</a></li>
             <li id="contentsOpen" class="" role="button"><a href="#" title="contents">Contents</a></li>
-            <li class="" role="button" data-toggle="modal" data-target="#defModal"><a href="#" title="Definitions">Definitions</a></li>
+            <!-- <li class="" role="button" data-toggle="modal" data-target="#defModal"><a href="#" title="Definitions">Definitions</a></li> -->
             <li id="measureOpen" class="" role="button" data-target="#mTool"><a href="#" title="Measurement">Measurement</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -126,8 +112,16 @@
 <div id="defModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div id="defModalCon" class="modal-dialog modal-lg">
     <div id="definitions" class="modal-content modal-style"></div>
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+  </div>
+</div>
+
+<!-- Zoning Descriptions Modal -->
+<!--==============================================================-->
+<div id="defFloodModal" class="modal fade bs-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div id="defModalCon" class="modal-dialog modal-lg">
+    <div id="floodDefinitions" class="modal-content modal-style"></div>
+  </div>
+</div>
 
 <!-- Content -->
 <!--==============================================================-->
@@ -209,8 +203,7 @@
 <!-- Custom JavaScript -->
   <script src="js/vendor/plugins.js"></script>
   <script src="js/config.js"></script>
-  <!-- // <script src="js/main.js"></script> -->
-  <script src="js/main.min.js"></script>
+  <script src="js/main.js"></script>
 
   <!-- Google Analytics -->
   <script>
