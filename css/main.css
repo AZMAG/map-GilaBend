@@ -365,6 +365,10 @@ span.searchIcon.esriIconZoom {
 .search.suggestionsMenu {
 
 }
+#floodZoneDefinitionsLink {
+    float:right;
+    display:none;
+}
 
 /* ==========================================
 **** definitions styles ****
