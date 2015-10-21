@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.Version = "v1.0.2 | 10/13/2015";
+    this.Version = "v1.0.3 | 10/21/2015";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -10,7 +10,7 @@ var appConfig = new function() {
 
     this.GeometryService = "http://geo.azmag.gov/gismag/rest/services/Utilities/Geometry/GeometryServer"; // MAGs service
 
-    this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/Wickenburg_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
+    this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/GilaBend_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
 
     this.initExtent = {
         "xmin": -12621000,
