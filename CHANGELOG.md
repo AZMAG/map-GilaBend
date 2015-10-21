@@ -7,6 +7,10 @@ CHANGELOG Town of Gila Bend Mapping Website
 
 ### Version x.x.x (xx/xx/2015)
 
+### Version 1.0.4 (10/21/2015)
+
+* fixed css issue on flood definitions link
+
 ### Version 1.0.3 (10/21/2015)
 
 * updates to mxd
