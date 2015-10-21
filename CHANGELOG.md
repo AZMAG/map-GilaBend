@@ -7,6 +7,15 @@ CHANGELOG Town of Gila Bend Mapping Website
 
 ### Version x.x.x (xx/xx/2015)
 
+### Version 1.0.3 (10/21/2015)
+
+* updates to mxd
+* added flood zone definitions link to legend window
+* moved zoning definitions link to legend window
+* upgrade modernizr to `v2.8.3` via CDN - [modernizr] (http://cdnjs.com/libraries/modernizr)
+* upgrade html5shiv to `v3.7.3` via CDN - [html5shiv] (https://cdnjs.com/libraries/html5shiv)
+* upgrade respond.js to `v1.4.2` via CDN - [respond.js] (https://cdnjs.com/libraries/respond.js)
+
 ### Version 1.0.2 (10/13/2015)
 
 * fixed version issues

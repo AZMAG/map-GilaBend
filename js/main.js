@@ -209,7 +209,7 @@ require([
     var mpaBoundaryParms = new ImageParameters();
     mpaBoundaryParms.layerIds = [7];
     mpaBoundaryParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var mpaBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {     
+    var mpaBoundary = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
         id: "mpaBoundary",
         imageParameters: mpaBoundaryParms,
         outFields: ["*"],
@@ -221,7 +221,7 @@ require([
     var gbZoningParms = new ImageParameters();
     gbZoningParms.layerIds = [6];
     gbZoningParms.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {     
+    var gbZoning = map.addLayer(new ArcGISDynamicMapServiceLayer(appConfig.mainURL, {
         id: "gbZoning",
         imageParameters: gbZoningParms,
         outFields: ["*"],
@@ -446,7 +446,7 @@ require([
                 var clayer = map.getLayer(this.value);
                 clayer.setVisibility(!clayer.visible);
                 this.checked = clayer.visible;
-                if (this.value === 'gbZoning') {
+                if (this.value === "gbZoning") {
                     if (this.checked) {
                     $("#zoneDefinitionsLink").show();
                     }
@@ -454,8 +454,8 @@ require([
                     $("#zoneDefinitionsLink").hide();
                 }
                 }
-                if (this.value === 'gbFlood' || this.value === 'gbPendFlood') {
-                    if (map.getLayer('gbFlood').visible || map.getLayer('gbPendFlood').visible) {
+                if (this.value === "gbFlood" || this.value === "gbPendFlood") {
+                    if (map.getLayer("gbFlood").visible || map.getLayer("gbPendFlood").visible) {
                     $("#floodZoneDefinitionsLink").show();
                     }
                     else{
