@@ -89,11 +89,44 @@ module.exports = function(grunt) {
             },
         },
 
+        replace: {
+            update_Meta: {
+                src: ["index.html", "js/config.js", "humans.txt", "README.md"], // source files array
+                // src: ["README.md"], // source files array
+                overwrite: true, // overwrite matched source files
+                replacements: [{
+                    // html pages
+                    from: /(<meta name="revision-date" content=")[0-9]{2}\/[0-9]{2}\/[0-9]{4}(">)/g,
+                    to: '<meta name="revision-date" content="' + '<%= pkg.date %>' + '">',
+                }, {
+                    // html pages
+                    from: /(<meta name="version" content=")([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))(">)/g,
+                    to: '<meta name="version" content="' + '<%= pkg.version %>' + '">',
+                }, {
+                    // config.js
+                    from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    to: 'v' + '<%= pkg.version %>' + ' | ' + '<%= pkg.date %>',
+                }, {
+                    // humans.txt
+                    from: /(Version\: v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
+                    to: "Version: v" + '<%= pkg.version %>',
+                }, {
+                    // humans.txt
+                    from: /(Last updated\: )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    to: "Last updated: " + '<%= pkg.date %>',
+                }, {
+                    // README.md
+                    from: /(#### `v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( - )[0-9]{2}\/[0-9]{2}\/[0-9]{4}(`)/g,
+                    to: "#### `v" + '<%= pkg.version %>' + ' - ' + '<%= pkg.date %>' + '`',
+                }]
+            }
+        }
+
     });
 
     // this would be run by typing "grunt test" on the command line
     grunt.registerTask("work", ["jshint"]);
-    grunt.registerTask("build", ["uglify", "cssmin", "concat"]);
+    grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
 
     grunt.registerTask("buildcss", ["cssmin", "concat"]);
     grunt.registerTask("buildjs", ["uglify"]);
