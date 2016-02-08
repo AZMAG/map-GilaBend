@@ -5,7 +5,13 @@ CHANGELOG Town of Gila Bend Mapping Website
 
 `Major/Minor/Patch 0.0.0`
 
-### Version x.x.x (xx/xx/2015)
+### Version x.x.x (xx/xx/2016)
+
+### Version 1.0.5 (02/08/2016)
+
+* updated PDF reports URL for employment
+* moved reports URL's from view to config
+* updated grunt files
 
 ### Version 1.0.4 (10/21/2015)
 
