@@ -7,21 +7,30 @@ module.exports = function(grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON("package.json"),
-        bannercss: '/*!\n' +
-            ' * @concat.min.css\n' +
-            ' * @CSS Document for Gila Bend Map Viewer @ MAG\n' +
-            ' * @For Production\n' +
-            ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-            ' * @author <%= pkg.author %>\n' +
-            '*/\n',
 
-        bannerjs: '/*!\n' +
-            ' * @main.min.js\n' +
-            ' * @JavaScript document for Gila Bend Map Viewer @ MAG\n' +
-            ' * @For Production\n' +
-            ' * @<%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %>\n' +
-            ' * @author <%= pkg.author %>\n' +
-            '*/\n',
+        bannercss:  '/*! ========================================================================\n' +
+                ' * Maricopa Association of Governments\n' +
+                ' * CSS files for MAG Gila Bend Map Viewer\n' +
+                ' * @concat.min.css | version | <%= pkg.version %>\n' +
+                ' * Production | <%= pkg.date %>\n' +
+                ' * http://geo.azmag.gov/maps/gilabend/\n' +
+                ' * MAG Gila Bend Viewer\n' +
+                ' * ==========================================================================\n' +
+                ' * Copyright 2016 MAG\n' +
+                ' * Licensed under MIT\n' +
+                ' * ========================================================================== */\n',
+
+        bannerjs:  '/*! ========================================================================\n' +
+                    ' * Maricopa Association of Governments\n' +
+                    ' * JavaScript files for MAG Gila Bend Map Viewer\n' +
+                    ' * @main.min.js | version | <%= pkg.version %>\n' +
+                    ' * Production | <%= pkg.date %>\n' +
+                    ' * http://geo.azmag.gov/maps/gilabend/\n' +
+                    ' * MAG Gila Bend Map Viewer\n' +
+                    ' * ==========================================================================\n' +
+                    ' * Copyright 2016 MAG\n' +
+                    ' * Licensed under MIT\n' +
+                    ' * ========================================================================== */\n',
 
         jshint: {
             files: ["js/config.js", "js/main.js"],
@@ -116,8 +125,16 @@ module.exports = function(grunt) {
                     to: "Last updated: " + '<%= pkg.date %>',
                 }, {
                     // README.md
-                    from: /(#### `v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( - )[0-9]{2}\/[0-9]{2}\/[0-9]{4}(`)/g,
-                    to: "#### `v" + '<%= pkg.version %>' + ' - ' + '<%= pkg.date %>' + '`',
+                    from: /(#### version )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
+                    to: "#### version " + '<%= pkg.version %>',
+                }, {
+                    // README.md
+                    from: /(`Updated: )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    to: "`Updated: " + '<%= pkg.date %>',
+                }, {
+                    // main.css
+                    from: /(main.css)( \| )(version)( \| )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
+                    to: "main.css | version |" +' <%= pkg.version %>',
                 }]
             }
         }

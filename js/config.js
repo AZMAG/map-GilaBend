@@ -1,12 +1,12 @@
 var appConfig = new function() {
 
-    this.Version = "v1.0.5 | 02/08/2016";
+    this.Version = "v1.0.6 | 06/22/2016";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
     this.mainURL = "http://geo.azmag.gov/gismag/rest/services/maps/GilaBend/MapServer";
 
-    this.MaricopaAssessor = "http://mcassessor.maricopa.gov/?s=";
+    this.MaricopaAssessor = "http://mcassessor.maricopa.gov/mcs.php?q=";
 
     this.GeometryService = "http://geo.azmag.gov/gismag/rest/services/Utilities/Geometry/GeometryServer"; // MAGs service
 
