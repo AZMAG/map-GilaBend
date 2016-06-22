@@ -1,22 +1,36 @@
 {
   "name": "GilaBend-Project",
-  "version": "1.0.5",
-  "date": "02/08/2016",
-  "author": "Vern Wolfley & Jack Fairfield",
-  "email1": "vwolfley@azmag.gov",
-  "email2": "jfairfield@azmag.gov",
-  "url": "http://geo.azmag.gov/maps/gilabend/",
+  "version": "1.0.6",
+  "date": "06/22/2016",
+  "description": "MAG Bikeways Viewer",
+  "keywords": ["bikeways", "bikemap", "biking", "bicycles", "cycling", "routes", "transportation", "Maricopa", "Pinal", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
+  "main": "index.js",
+  "homepage": "http://geo.azmag.gov/maps/gilabend/",
+  "author": "Vern Wolfley <vwolfley@azmag.gov>",
+  "contributors": [{
+    "name": "Vern Wolfley",
+    "email": "vwolfley@azmag.gov"
+  }, {
+    "name": "Jack Fairfield",
+    "email": "jfairfield@azmag.gov"
+  }],
   "private": true,
+  "dependencies": {
+
+  },
   "devDependencies": {
-    "grunt": "*",
+    "grunt":                "0.4.5",
     "grunt-contrib-concat": "*",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-text-replace": "*",
-    "jshint-stylish-ex": "*",
-    "matchdep": "*",
-    "normalize.css": "*"
-  }
+    "grunt-contrib-watch":  "*",
+    "grunt-text-replace":   "*",
+    "grunt-version-check":  "*",
+    "jshint-stylish-ex":    "*",
+    "lodash":               "*",
+    "matchdep":             "*",
+    "normalize.css":        "*"
+  },
+  "license": "MIT"
 }

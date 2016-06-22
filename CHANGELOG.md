@@ -1,23 +1,36 @@
-CHANGELOG Town of Gila Bend Mapping Website
-===========================================
+# CHANGELOG #
+### Town of Gila Bend Mapping Website ###
 
 [![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
-`Major/Minor/Patch 0.0.0`
+All notable changes to this project will be documented in this file.
 
-### Version x.x.x (xx/xx/2016)
+Releases will be numbered with the following format:
 
-### Version 1.0.5 (02/08/2016)
+**`<major>.<minor>.<patch>`**
+
+And constructed with the following guidelines:
+
+1. **MAJOR** version when you make incompatible API changes **bumps the major** resets minor and patch
+2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
+3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
+======================================================================================================================
+
+## Version 1.0.6 | 06/22/2016
+
+* fix URL for Maricopa County Assessors Office
+
+## Version 1.0.5 | 02/08/2016
 
 * updated PDF reports URL for employment
 * moved reports URL's from view to config
 * updated grunt files
 
-### Version 1.0.4 (10/21/2015)
+## Version 1.0.4 | 10/21/2015
 
 * fixed css issue on flood definitions link
 
-### Version 1.0.3 (10/21/2015)
+## Version 1.0.3 | 10/21/2015
 
 * updates to mxd
 * added flood zone definitions link to legend window
@@ -26,15 +39,15 @@ CHANGELOG Town of Gila Bend Mapping Website
 * upgrade html5shiv to `v3.7.3` via CDN - [html5shiv] (https://cdnjs.com/libraries/html5shiv)
 * upgrade respond.js to `v1.4.2` via CDN - [respond.js] (https://cdnjs.com/libraries/respond.js)
 
-### Version 1.0.2 (10/13/2015)
+## Version 1.0.2 | 10/13/2015
 
 * fixed version issues
 
-### Version 1.0.1 (10/13/2015)
+## Version 1.0.1 | 10/13/2015
 
 * fixed email address
 
-### Version 1.0.0 (09/24/2015)
+## Version 1.0.0 | 09/24/2015
 
 * fixed popup to link only on Parcels Layer
 * removed unused outdated files
