@@ -1,7 +1,7 @@
 {
   "name": "GilaBend-Project",
-  "version": "1.0.6",
-  "date": "06/22/2016",
+  "version": "1.0.7",
+  "date": "02/14/2017",
   "description": "MAG Bikeways Viewer",
   "keywords": ["bikeways", "bikemap", "biking", "bicycles", "cycling", "routes", "transportation", "Maricopa", "Pinal", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
   "main": "index.js",
