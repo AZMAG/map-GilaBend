@@ -16,6 +16,11 @@ And constructed with the following guidelines:
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
 ======================================================================================================================
 
+## Version 1.0.7 | 07/14/2017
+
+* updated link to employment viewer pdf data
+* updated link to demographic viewer pdf data
+
 ## Version 1.0.6 | 06/22/2016
 
 * fix URL for Maricopa County Assessors Office

@@ -1,6 +1,6 @@
 var appConfig = new function() {
 
-    this.Version = "v1.0.6 | 06/22/2016";
+    this.Version = "v1.0.7 | 02/14/2017";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 
@@ -13,9 +13,9 @@ var appConfig = new function() {
     this.printUrl = "http://geo.azmag.gov/gismag/rest/services/gp/GilaBend_Print/GPServer/Export%20Web%20Map"; // MAG Wickenburg Print service
 
     // Demographic PDF report
-    this.demService = "http://geo.azmag.gov/services/Demographics/reports.html?city=Gila Bend";
+    this.demService = "http://geo.azmag.gov/services/demographics2014/reports.html?city=Gila Bend";
     // Employment PDF report
-    this.empService = "http://geo.azmag.gov/services/employment2014/reports.html?city=Gila Bend";
+    this.empService = "http://geo.azmag.gov/services/employment2015/reports.html?jurisdiction=Gila Bend";
 
     this.initExtent = {
         "xmin": -12621000,
