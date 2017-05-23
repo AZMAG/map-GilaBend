@@ -15,22 +15,21 @@
     "email": "jfairfield@azmag.gov"
   }],
   "private": true,
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt":                "0.4.5",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-cssmin": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-watch":  "*",
-    "grunt-text-replace":   "*",
-    "grunt-version-check":  "*",
-    "jshint-stylish-ex":    "*",
-    "lodash":               "*",
-    "matchdep":             "*",
-    "normalize.css":        "*"
+    "grunt": "1.0.1",
+    "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-csslint": "2.0.0",
+    "grunt-contrib-cssmin": "2.2.0",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-uglify": "3.0.0",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-text-replace": "0.4.0",
+    "grunt-version-check": "0.3.7",
+    "jshint-stylish-ex": "0.2.0",
+    "lodash": "4.17.4",
+    "matchdep": "1.0.1",
+    "normalize.css": ">=7.0.0"
   },
   "license": "MIT"
 }
