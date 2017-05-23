@@ -16,7 +16,12 @@ And constructed with the following guidelines:
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
 ======================================================================================================================
 
-## Version 1.0.7 | 07/14/2017
+## Version 1.0.8 | 05/23/2017
+
+* update to file structure only!
+* updated Git files
+
+## Version 1.0.7 | 07/14/2016
 
 * updated link to employment viewer pdf data
 * updated link to demographic viewer pdf data

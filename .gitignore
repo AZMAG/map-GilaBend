@@ -213,3 +213,15 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+###########################
+## Project Specific Ignores
+###########################
+
+# Dependency directory
+# http://www.patrickcatanzariti.com/2014/11/how-to-remove-node_modules-from-your-git-repo/
+node_modules
+bower_components
+
+ # workspace files are user-specific don't track
+ *.sublime-workspace
