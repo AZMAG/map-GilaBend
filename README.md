@@ -1,15 +1,15 @@
-<img src="http://geo.azmag.gov/maps/gilabend/img/townLogo.jpg" alt="gilabend" height="100"/>  ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
+<img src="https://geo.azmag.gov/maps/gilabend/img/townLogo.jpg" alt="gilabend" height="100"/>  ![](https://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
 # Town of Gila Bend Mapping Website #
 MAG mapping application for the Town of Gila Bend showing assorted data
 
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/gilabend/)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](https://geo.azmag.gov/maps/gilabend/)
 [![GitHub version](https://badge.fury.io/gh/AZMAG%2Fmap-GilaBend.svg)](https://badge.fury.io/gh/AZMAG%2Fmap-GilaBend)
 [![GitHub issues](https://img.shields.io/github/issues/AZMAG/map-GilaBend.svg)](https://github.com/AZMAG/map-GilaBend/issues)
 [![dependencies](https://david-dm.org/AZMAG/map-GilaBend.png)](https://david-dm.org/AZMAG/map-GilaBend)
 [![devDependency Status](https://david-dm.org/AZMAG/map-GilaBend/dev-status.png)](https://david-dm.org/AZMAG/map-GilaBend)
-[![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
-[![Built with Grunt](http://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Semver](https://img.shields.io/SemVer/2.0.0.png)](https://semver.org/spec/v2.0.0.html)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](https://gruntjs.com/)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ********************************************************************************************************
@@ -22,11 +22,11 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Gila B
 
 ## Version
 
-#### version 1.0.8 ####
+#### version 1.0.9 ####
 
- `Updated: 05/23/2017`
+ `Updated: 2019-09-12`
 
- `Created: 09/21/2015`
+ `Created: 2015-09-21`
 
 Releases will be numbered with the following format:
 
@@ -44,7 +44,7 @@ And constructed with the following guidelines:
 
 ## Site URL
 
-* [http://geo.azmag.gov/maps/gilabend/](http://geo.azmag.gov/maps/gilabend/)
+* [https://geo.azmag.gov/maps/gilabend/](https://geo.azmag.gov/maps/gilabend/)
 
 ## Documentation
 
@@ -74,11 +74,3 @@ Please acknowledge the Maricopa Association of Governments (MAG) GIS as the sour
 Code released under the MIT license.
 
 * [LICENSE](LICENSE)
-
-Copyright (c) 2017 Maricopa Association of Governments
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

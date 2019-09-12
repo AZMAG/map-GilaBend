@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     "use strict";
 
@@ -8,29 +8,29 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON("package.json"),
 
-        bannercss:  '/*! ========================================================================\n' +
-                ' * Maricopa Association of Governments\n' +
-                ' * CSS files for MAG Gila Bend Map Viewer\n' +
-                ' * @concat.min.css | version | <%= pkg.version %>\n' +
-                ' * Production | <%= pkg.date %>\n' +
-                ' * http://geo.azmag.gov/maps/gilabend/\n' +
-                ' * MAG Gila Bend Viewer\n' +
-                ' * ==========================================================================\n' +
-                ' * Copyright 2016 MAG\n' +
-                ' * Licensed under MIT\n' +
-                ' * ========================================================================== */\n',
+        bannercss: '/*! ========================================================================\n' +
+            ' * Maricopa Association of Governments\n' +
+            ' * CSS files for MAG Gila Bend Map Viewer\n' +
+            ' * @concat.min.css | version | <%= pkg.version %>\n' +
+            ' * Production | <%= pkg.date %>\n' +
+            ' * http://geo.azmag.gov/maps/gilabend/\n' +
+            ' * MAG Gila Bend Viewer\n' +
+            ' * ==========================================================================\n' +
+            ' * Copyright 2016 MAG\n' +
+            ' * Licensed under MIT\n' +
+            ' * ========================================================================== */\n',
 
-        bannerjs:  '/*! ========================================================================\n' +
-                    ' * Maricopa Association of Governments\n' +
-                    ' * JavaScript files for MAG Gila Bend Map Viewer\n' +
-                    ' * @main.min.js | version | <%= pkg.version %>\n' +
-                    ' * Production | <%= pkg.date %>\n' +
-                    ' * http://geo.azmag.gov/maps/gilabend/\n' +
-                    ' * MAG Gila Bend Map Viewer\n' +
-                    ' * ==========================================================================\n' +
-                    ' * Copyright 2016 MAG\n' +
-                    ' * Licensed under MIT\n' +
-                    ' * ========================================================================== */\n',
+        bannerjs: '/*! ========================================================================\n' +
+            ' * Maricopa Association of Governments\n' +
+            ' * JavaScript files for MAG Gila Bend Map Viewer\n' +
+            ' * @main.min.js | version | <%= pkg.version %>\n' +
+            ' * Production | <%= pkg.date %>\n' +
+            ' * http://geo.azmag.gov/maps/gilabend/\n' +
+            ' * MAG Gila Bend Map Viewer\n' +
+            ' * ==========================================================================\n' +
+            ' * Copyright 2016 MAG\n' +
+            ' * Licensed under MIT\n' +
+            ' * ========================================================================== */\n',
 
         jshint: {
             files: ["js/config.js", "js/main.js"],
@@ -57,7 +57,10 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    "js/main.min.js": ["js/main.js"],
+                    "dist/js/main.min.js": ["dist/js/main.js"],
+                    "dist/js/config.min.js": ["dist/js/config.js"],
+                    "dist/js/vendor/bootstrapmap.min.js": ["dist/js/vendor/bootstrapmap.js"],
+                    "dist/js/vendor/plugins.min.js": ["dist/js/vendor/plugins.js"]
                 }
             }
         },
@@ -69,9 +72,9 @@ module.exports = function(grunt) {
                     banner: '/* <%= pkg.name %> - v<%= pkg.version %> | <%= grunt.template.today("mm-dd-yyyy") %> */\n'
                 },
                 files: {
-                    "css/main.min.css": ["css/main.css"],
-                    "css/normalize.min.css": ["css/normalize.css"],
-                    "css/bootstrapmap.min.css": ["css/bootstrapmap.css"]
+                    "dist/css/main.min.css": ["dist/css/main.css"],
+                    "dist/css/normalize.min.css": ["dist/css/normalize.css"],
+                    "dist/css/bootstrapmap.min.css": ["dist/css/bootstrapmap.css"]
                 }
             }
         },
@@ -82,10 +85,41 @@ module.exports = function(grunt) {
                 banner: '<%= bannercss %>\n'
             },
             dist: {
-                src: ["css/normalize.min.css", "css/bootstrapmap.min.css", "css/main.min.css"],
-                dest: 'css/concat.min.css'
+                src: ["dist/css/normalize.min.css", "dist/css/bootstrapmap.min.css", "dist/css/main.min.css"],
+                dest: 'dist/css/concat.min.css'
             }
         },
+
+        toggleComments: {
+            customOptions: {
+                options: {
+                    removeCommands: true
+                },
+                files: {
+                    "dist/index.html": "src/index.html",
+                    "dist/js/main.js": "src/js/main.js"
+
+                }
+            }
+        },
+
+        clean: {
+            build: {
+                src: ["dist/"]
+            },
+            js: ["dist/js/*.js", "!dist/js/*.min.js"],
+            jsv: ["dist/js/vendor/*.js", "!dist/js/vendor/*.min.js"],
+            css: ["dist/css/*.css", "!dist/css/concat.min.css"]
+        },
+
+         copy: {
+             build: {
+                 cwd: "src/",
+                 src: ["**"],
+                 dest: "dist/",
+                 expand: true
+             }
+         },
 
         watch: {
             scripts: {
@@ -100,12 +134,11 @@ module.exports = function(grunt) {
 
         replace: {
             update_Meta: {
-                src: ["index.html", "js/config.js", "humans.txt", "README.md"], // source files array
-                // src: ["README.md"], // source files array
+                src: ["src/index.html", "src/js/config.js", "src/humans.txt", "src/LICENSE", "LICENSE", "README.md"],
                 overwrite: true, // overwrite matched source files
                 replacements: [{
                     // html pages
-                    from: /(<meta name="revision-date" content=")[0-9]{2}\/[0-9]{2}\/[0-9]{4}(">)/g,
+                    from: /(<meta name="revision-date" content=")[0-9]{4}-[0-9]{2}-[0-9]{2}(">)/g,
                     to: '<meta name="revision-date" content="' + '<%= pkg.date %>' + '">',
                 }, {
                     // html pages
@@ -113,15 +146,19 @@ module.exports = function(grunt) {
                     to: '<meta name="version" content="' + '<%= pkg.version %>' + '">',
                 }, {
                     // config.js
-                    from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: 'v' + '<%= pkg.version %>' + ' | ' + '<%= pkg.date %>',
+                }, {
+                     // config.js
+                    from: /(copyright = ")[0-9]{4}/g,
+                    to: 'copyright = "' + '<%= pkg.copyright %>',
                 }, {
                     // humans.txt
                     from: /(Version\: v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
                     to: "Version: v" + '<%= pkg.version %>',
                 }, {
                     // humans.txt
-                    from: /(Last updated\: )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    from: /(Last updated\: )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: "Last updated: " + '<%= pkg.date %>',
                 }, {
                     // README.md
@@ -129,12 +166,12 @@ module.exports = function(grunt) {
                     to: "#### version " + '<%= pkg.version %>',
                 }, {
                     // README.md
-                    from: /(`Updated: )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    from: /(`Updated: )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: "`Updated: " + '<%= pkg.date %>',
                 }, {
-                    // main.css
-                    from: /(main.css)( \| )(version)( \| )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
-                    to: "main.css | version |" +' <%= pkg.version %>',
+                    // LICENSE
+                    from: /(Copyright \(c\) )[0-9]{4}/g,
+                    to: "Copyright (c) " + "<%= pkg.copyright %>",
                 }]
             }
         }
@@ -143,10 +180,12 @@ module.exports = function(grunt) {
 
     // this would be run by typing "grunt test" on the command line
     grunt.registerTask("work", ["jshint"]);
-    grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
+    // grunt.registerTask("build", ["replace", "uglify", "cssmin", "concat"]);
 
     grunt.registerTask("buildcss", ["cssmin", "concat"]);
     grunt.registerTask("buildjs", ["uglify"]);
+
+    grunt.registerTask("build", ["clean:build", "replace", "copy", "toggleComments", "uglify", "cssmin", "concat", "clean:js", "clean:jsv", "clean:css"]);
 
     // the default task can be run just by typing "grunt" on the command line
     grunt.registerTask("default", []);
