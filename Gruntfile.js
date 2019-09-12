@@ -112,6 +112,15 @@ module.exports = function (grunt) {
             css: ["dist/css/*.css", "!dist/css/concat.min.css"]
         },
 
+         copy: {
+             build: {
+                 cwd: "src/",
+                 src: ["**"],
+                 dest: "dist/",
+                 expand: true
+             }
+         },
+
         watch: {
             scripts: {
                 files: ["js/main.js", "js/config.js", "Gruntfile.js"],
@@ -137,8 +146,12 @@ module.exports = function (grunt) {
                     to: '<meta name="version" content="' + '<%= pkg.version %>' + '">',
                 }, {
                     // config.js
-                    from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g,
+                    from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: 'v' + '<%= pkg.version %>' + ' | ' + '<%= pkg.date %>',
+                }, {
+                     // config.js
+                    from: /(copyright = ")[0-9]{4}/g,
+                    to: 'copyright = "' + '<%= pkg.copyright %>',
                 }, {
                     // humans.txt
                     from: /(Version\: v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
@@ -156,10 +169,6 @@ module.exports = function (grunt) {
                     from: /(`Updated: )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: "`Updated: " + '<%= pkg.date %>',
                 }, {
-                    // main.css
-                    from: /(main.css)( \| )(version)( \| )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
-                    to: "main.css | version |" + ' <%= pkg.version %>',
-                }, {
                     // LICENSE
                     from: /(Copyright \(c\) )[0-9]{4}/g,
                     to: "Copyright (c) " + "<%= pkg.copyright %>",
@@ -176,7 +185,7 @@ module.exports = function (grunt) {
     grunt.registerTask("buildcss", ["cssmin", "concat"]);
     grunt.registerTask("buildjs", ["uglify"]);
 
-     grunt.registerTask("build", ["clean:build", "replace", "copy", "toggleComments", "uglify", "cssmin", "concat", "clean:js", "clean:jsv", "clean:css"]);
+    grunt.registerTask("build", ["clean:build", "replace", "copy", "toggleComments", "uglify", "cssmin", "concat", "clean:js", "clean:jsv", "clean:css"]);
 
     // the default task can be run just by typing "grunt" on the command line
     grunt.registerTask("default", []);
