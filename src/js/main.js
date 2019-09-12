@@ -41,10 +41,14 @@ require([
     "esri/tasks/PrintTemplate",
     "esri/request",
     "esri/config",
-
-    "js/vendor/bootstrapmap.min.js",
+    // <!-- comments:comment // -->
+    "js/vendor/bootstrapmap.js",
+    // <!-- endcomments -->
+    // <!-- comments:uncomment // -->
+    // "js/vendor/bootstrapmap.min.js",
+    // <!-- endcomments -->
     "dojo/domReady!"
-], function(dc, dom, on, parser, query, keys, arrayUtils, Color, connect, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder, Popup, Graphic, Multipoint, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, ArcGISDynamicMapServiceLayer, FeatureLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, PopupTemplate, InfoTemplate, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
+], function (dc, dom, on, parser, query, keys, arrayUtils, Color, connect, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder, Popup, Graphic, Multipoint, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, ArcGISDynamicMapServiceLayer, FeatureLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, PopupTemplate, InfoTemplate, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
     parser.parse();
 
@@ -53,6 +57,7 @@ require([
 
     // add version and date to about.html, changed in config.js
     dom.byId("version").innerHTML = appConfig.Version;
+    $(".copyright").text(appConfig.copyright);
 
     // add pdf links to window
     dom.byId("demLink").setAttribute("href", appConfig.demService);
@@ -166,7 +171,7 @@ require([
     function handlePrintInfo(resp) {
         var layoutTemplate, templateNames, mapOnlyIndex, templates;
         layoutTemplate = arrayUtils.filter(resp.parameters,
-            function(param, idx) {
+            function (param, idx) {
                 return param.name === "Layout_Template";
             });
         if (layoutTemplate.length === 0) {
@@ -183,7 +188,7 @@ require([
             templateNames.splice(mapOnlyRemove, mapOnlyRemove);
         }
         // create a print template for each choice
-        templates = arrayUtils.map(templateNames, function(ch) {
+        templates = arrayUtils.map(templateNames, function (ch) {
             var plate = new PrintTemplate();
             plate.layout = plate.label = ch;
             plate.format = "PDF";
@@ -315,33 +320,27 @@ require([
 
     // Measurement Tool
     //=================================================================================>
-    //dojo.keys.copyKey maps to CTRL on windows and Cmd on Mac., but has wrong code for Chrome on Mac
-    var snapManager = map.enableSnapping({
-        snapKey: has("mac") ? keys.META : keys.CTRL
-    });
-    var layerInfos = [{
-        layer: gbParcels
-    }];
-    snapManager.setLayerInfos(layerInfos);
     var measurement = new Measurement({
         map: map,
         lineSymbol: sfs
     }, dom.byId("measurementDiv"));
+    measurement.on("measure-start", function (evt) {
+        map.setInfoWindowOnClick(false);
+        //disablepopup();
+    });
+    measurement.on("measure-end", function (evt) {
+        map.setInfoWindowOnClick(true);
+    });
     measurement.startup();
-    on(measurement.area, "click", killPopUp);
-    on(measurement.distance, "click", killPopUp);
-    on(measurement.location, "click", killPopUp);
 
     function killPopUp() {
         var toolName = this.dojoAttachPoint;
         var activeTool = measurement[toolName].checked;
         if (activeTool === true) {
             // kill the popup
-            identifyHandler.remove();
         }
         if (activeTool !== true) {
             // turn popups back on
-            identifyHandler = map.on("click", executeIdentifyTask);
         }
     }
 
@@ -440,31 +439,29 @@ require([
     legend.startup();
 
     //add check boxes
-    arrayUtils.forEach(tocLayers, function(layer) {
+    arrayUtils.forEach(tocLayers, function (layer) {
         var layerName = layer.title;
         var checkBox = new CheckBox({
             name: "checkBox" + layer.layer.id,
             value: layer.layer.id,
             checked: layer.layer.visible,
-            onChange: function() {
+            onChange: function () {
                 var clayer = map.getLayer(this.value);
                 clayer.setVisibility(!clayer.visible);
                 this.checked = clayer.visible;
                 if (this.value === "gbZoning") {
                     if (this.checked) {
-                    $("#zoneDefinitionsLink").show();
+                        $("#zoneDefinitionsLink").show();
+                    } else {
+                        $("#zoneDefinitionsLink").hide();
                     }
-                else{
-                    $("#zoneDefinitionsLink").hide();
-                }
                 }
                 if (this.value === "gbFlood" || this.value === "gbPendFlood") {
                     if (map.getLayer("gbFlood").visible || map.getLayer("gbPendFlood").visible) {
-                    $("#floodZoneDefinitionsLink").show();
+                        $("#floodZoneDefinitionsLink").show();
+                    } else {
+                        $("#floodZoneDefinitionsLink").hide();
                     }
-                    else{
-                    $("#floodZoneDefinitionsLink").hide();
-                }
                 }
             }
         });
@@ -487,7 +484,7 @@ require([
         intermediateChanges: true,
         discreteValues: 11,
         style: "width:250px;",
-        onChange: function(value1) {
+        onChange: function (value1) {
             gbFlood.setOpacity(value1);
         }
     }, "slider1");
@@ -500,7 +497,7 @@ require([
         intermediateChanges: true,
         discreteValues: 11,
         style: "width:250px;",
-        onChange: function(value2) {
+        onChange: function (value2) {
             gbZoning.setOpacity(value2);
         }
     }, "slider2");
@@ -509,7 +506,7 @@ require([
     //=================================================================================>
     function geosearch() {
         var def = geocoder.find();
-        def.then(function(res) {
+        def.then(function (res) {
             geocodeResults(res);
         });
     }
@@ -593,7 +590,7 @@ require([
         "href": "javascript: void(0);"
     }, query(".actionList", map.infoWindow.domNode)[0]);
 
-    on(link, "click", function() {
+    on(link, "click", function () {
         var feature = map.infoWindow.getSelectedFeature();
         var url = window.location;
         var link = "";
@@ -602,7 +599,7 @@ require([
         window.open(link);
     });
 
-    connect.connect(popup, "onSelectionChange", function() {
+    connect.connect(popup, "onSelectionChange", function () {
         var graphic = popup.getSelectedFeature();
         if (graphic) {
             if (graphic.attributes.APN) {
@@ -704,10 +701,10 @@ require([
         identifyParamsTask4.mapExtent = map.extent;
 
         var deferred1 = identifyTask1.execute(identifyParamsTask1).addCallback(
-            function(response) {
+            function (response) {
                 // response is an array of identify result objects
                 // Let's return an array of features.
-                return arrayUtils.map(response, function(result) {
+                return arrayUtils.map(response, function (result) {
                     var feature = result.feature;
                     feature.attributes.layerName =
                         result.layerName;
@@ -728,10 +725,10 @@ require([
             }); //end addCallback
 
         var deferred2 = identifyTask2.execute(identifyParamsTask2).addCallback(
-            function(response) {
+            function (response) {
                 // response is an array of identify result objects
                 // Let's return an array of features.
-                return arrayUtils.map(response, function(result) {
+                return arrayUtils.map(response, function (result) {
                     var feature = result.feature;
                     feature.attributes.layerName =
                         result.layerName;
@@ -751,10 +748,10 @@ require([
             }); //end addCallback
 
         var deferred3 = identifyTask3.execute(identifyParamsTask3).addCallback(
-            function(response) {
+            function (response) {
                 // response is an array of identify result objects
                 // Let's return an array of features.
-                return arrayUtils.map(response, function(result) {
+                return arrayUtils.map(response, function (result) {
                     var feature = result.feature;
                     feature.attributes.layerName =
                         result.layerName;
@@ -765,7 +762,7 @@ require([
                         template.setContent(
                             "Flood Zone: ${FloodZone}" +
                             "<br>Description: ${FloodZoneD}"
-                            );
+                        );
                         feature.setInfoTemplate(
                             template);
                     } // end if
@@ -773,10 +770,10 @@ require([
                 });
             }); //end addCallback
         var deferred4 = identifyTask4.execute(identifyParamsTask4).addCallback(
-            function(response) {
+            function (response) {
                 // response is an array of identify result objects
                 // Let's return an array of features.
-                return arrayUtils.map(response, function(result) {
+                return arrayUtils.map(response, function (result) {
                     var feature = result.feature;
                     feature.attributes.layerName =
                         result.layerName;
@@ -818,14 +815,14 @@ function toggleContent() {
         $("#contentsOpen");
     }
 }
-$(document).ready(function() {
+$(document).ready(function () {
     $("#contentsOpen").fadeTo("slow");
     $("#legend").fadeTo("slow");
     $("#legend").draggable({
         containment: "#mapDiv"
     });
     contentsOpen = $("#contentsOpen").height();
-    $("#contentsOpen").click(function() {
+    $("#contentsOpen").click(function () {
         toggleContent();
     });
 });
@@ -847,17 +844,17 @@ function toggleMTool() {
         $("#measureOpen");
     }
 }
-$(document).ready(function() {
+$(document).ready(function () {
     $("#measureOpen").fadeTo("slow");
     $("#mTool").fadeTo("slow");
     measureOpen = $("#measureOpen").height();
     $("#mTool").css("top", "55px");
-    $("#measureOpen").click(function() {
+    $("#measureOpen").click(function () {
         toggleMTool();
     });
 });
 //sets original position of dropdown for measurement tool
-$(document).ready(function() {
+$(document).ready(function () {
     $("#mTool").hide();
 });
 // Print Tool open
@@ -887,29 +884,29 @@ function toggleReportWindow() {
         $("#reportOpen");
     }
 }
-$(document).ready(function() {
+$(document).ready(function () {
     $("#printOpen").fadeTo("slow");
     $("#printTool").fadeTo("slow");
     printOpen = $("#printOpen").height();
-    $("#printOpen").click(function() {
+    $("#printOpen").click(function () {
         togglePrint();
     });
     $("#reportOpen").fadeTo("slow");
     $("#reportTool").fadeTo("slow");
     reportOpen = $("#reportOpen").height();
-    $("#reportOpen").click(function() {
+    $("#reportOpen").click(function () {
         toggleReportWindow();
     });
 });
 //sets original position of dropdown for measurement tool
-$(document).ready(function() {
+$(document).ready(function () {
     $("#printTool").hide();
     $("#reportTool").hide();
 });
 // Bindings
 //=================================================================================>
 //
-$(document).ready(function() {
+$(document).ready(function () {
     //*** Content binding
     $("#legend").load("views/contents.html");
     //*** Content Help modal binding
