@@ -41,8 +41,12 @@ require([
     "esri/tasks/PrintTemplate",
     "esri/request",
     "esri/config",
-
-    "js/vendor/bootstrapmap.min.js",
+    // <!-- comments:comment // -->
+    "js/vendor/bootstrapmap.js",
+    // <!-- endcomments -->
+    // <!-- comments:uncomment // -->
+    // "js/vendor/bootstrapmap.min.js",
+    // <!-- endcomments -->
     "dojo/domReady!"
 ], function (dc, dom, on, parser, query, keys, arrayUtils, Color, connect, has, Map, SnappingManager, Measurement, Scalebar, HomeButton, LocateButton, Geocoder, Popup, Graphic, Multipoint, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, IdentifyTask, IdentifyParameters, ArcGISDynamicMapServiceLayer, FeatureLayer, ImageParameters, Legend, CheckBox, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, BasemapToggle, PopupTemplate, InfoTemplate, Print, PrintTemplate, esriRequest, esriConfig, BootstrapMap) {
 
