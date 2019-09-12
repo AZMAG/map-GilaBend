@@ -53,6 +53,7 @@ require([
 
     // add version and date to about.html, changed in config.js
     dom.byId("version").innerHTML = appConfig.Version;
+    $(".copyright").text(appConfig.copyright);
 
     // add pdf links to window
     dom.byId("demLink").setAttribute("href", appConfig.demService);

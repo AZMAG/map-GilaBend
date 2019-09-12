@@ -16,7 +16,12 @@ And constructed with the following guidelines:
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
 ======================================================================================================================
 
-## Version 1.0.8 | 05/23/2017
+## Version 1.0.9 | 2019-09-12
+
+* Fixed service URL
+* Added toggle npm to help build process
+
+## Version 1.0.8 | 2017-05-23
 
 * update to file structure only!
 * updated Git files

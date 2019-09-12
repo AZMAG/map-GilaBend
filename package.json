@@ -1,12 +1,17 @@
 {
   "name": "GilaBend-Project",
-  "version": "1.0.8",
-  "date": "05/23/2017",
-  "description": "MAG Bikeways Viewer",
-  "keywords": ["bikeways", "bikemap", "biking", "bicycles", "cycling", "routes", "transportation", "Maricopa", "Pinal", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
+  "version": "1.0.9",
+  "date": "2019-09-12",
+  "copyright": "2019",
+  "description": "MAG Gila Bend project viewer",
+  "keywords": ["zoning", "flood areas", "parcels", "employers", "transportation", "Gila Bend", "town", "Maricopa", "County", "Arizona", "MAG", "maps", "ESRI", "#MAGmaps"],
   "main": "index.js",
   "homepage": "http://geo.azmag.gov/maps/gilabend/",
-  "author": "Vern Wolfley <vwolfley@azmag.gov>",
+  "repository": [{
+    "type": "git",
+    "url": "https://github.com/AZMAG/map-GilaBend"
+  }],
+  "author": "MAG Regional Analytics (https://www.azmag.gov/)",
   "contributors": [{
     "name": "Vern Wolfley",
     "email": "vwolfley@azmag.gov"
@@ -18,8 +23,10 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.0.3",
+    "grunt-comment-toggler": "^0.2.2",
+    "grunt-contrib-clean": ">=2.0.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-csslint": "^2.0.0",
+    "grunt-contrib-copy": ">=1.0.0",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-uglify": "^4.0.0",
@@ -27,9 +34,18 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-version-check": "^0.3.8",
     "jshint-stylish-ex": "^0.2.0",
-    "lodash": ">=4.17.5",
+    "lodash": ">=4.17.11",
     "matchdep": "^2.0.0",
     "normalize.css": ">=8.0.1"
   },
+  "engines": {
+    "node": ">=10.14.2",
+    "npm": ">=6.4.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "license": "MIT"
 }
