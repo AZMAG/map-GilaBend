@@ -2,6 +2,11 @@ module.exports = function (grunt) {
 
     "use strict";
 
+    const fileHash = '<%= pkg.version %>' + '.' + '<%= grunt.template.today("yyyymmddHHMM") %>';
+    const jsFilePath = `dist/js/main.${fileHash}.js`;
+    const jsName = `js/scripts.js?v=${fileHash}`;
+    const cssName = `href="css/master.min.css?v=${fileHash}"`;
+
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
     grunt.initConfig({
@@ -112,14 +117,14 @@ module.exports = function (grunt) {
             css: ["dist/css/*.css", "!dist/css/concat.min.css"]
         },
 
-         copy: {
-             build: {
-                 cwd: "src/",
-                 src: ["**"],
-                 dest: "dist/",
-                 expand: true
-             }
-         },
+        copy: {
+            build: {
+                cwd: "src/",
+                src: ["**"],
+                dest: "dist/",
+                expand: true
+            }
+        },
 
         watch: {
             scripts: {
@@ -145,11 +150,15 @@ module.exports = function (grunt) {
                     from: /(<meta name="version" content=")([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))(">)/g,
                     to: '<meta name="version" content="' + '<%= pkg.version %>' + '">',
                 }, {
+                    // html pages - build-info
+                    from: /(<meta name="build-info" content=")([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))(?:\.)(\d{12})(">)/g,
+                    to: '<meta name="build-info" content="' + '<%= pkg.version %>' + '.' + '<%= grunt.template.today("yyyymmddHHMM") %>' + '">',
+                }, {
                     // config.js
                     from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: 'v' + '<%= pkg.version %>' + ' | ' + '<%= pkg.date %>',
                 }, {
-                     // config.js
+                    // config.js
                     from: /(copyright = ")[0-9]{4}/g,
                     to: 'copyright = "' + '<%= pkg.copyright %>',
                 }, {
