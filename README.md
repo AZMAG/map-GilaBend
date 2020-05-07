@@ -22,9 +22,9 @@ This JavaScript web app viewer was developed by MAG staff for the Town of Gila B
 
 ## Version
 
-#### version 1.0.9 ####
+#### version 1.0.10 ####
 
- `Updated: 2019-09-12`
+ `Updated: 2020-05-07`
 
  `Created: 2015-09-21`
 
