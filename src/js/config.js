@@ -1,5 +1,5 @@
 var appConfig = new (function () {
-  this.Version = "v1.1.1 | 2021-11-12";
+  this.Version = "v1.1.2 | 2021-11-12";
 
   this.copyright = "2021";
 
