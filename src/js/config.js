@@ -1,8 +1,8 @@
 var appConfig = new function () {
 
-    this.Version = "v1.0.12 | 2020-10-12";
+    this.Version = "v1.1.0 | 2021-11-12";
 
-    this.copyright = "2020";
+    this.copyright = "2021";
 
     this.emailLink = "https://www.azmag.gov/EmailPages/JasonHoward.asp";
 

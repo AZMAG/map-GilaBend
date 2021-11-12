@@ -42,8 +42,8 @@
 # SITE
     Site Name: Gila Bend Mapping Viewer
     Site URL: https://geo.azmag.gov/maps/gilabend/
-    Version: v1.0.12
-    Last updated: 2020-10-12
+    Version: v1.1.0
+    Last updated: 2021-11-12
     Creation date: 2015-09-21
     Language: English
     Doctype: HTML5
