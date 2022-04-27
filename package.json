@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.3.0",
-    "grunt": "^1.4.1",
+    "grunt": "^1.5.2",
     "grunt-cli": "^1.4.3",
     "grunt-comment-toggler": "^0.2.2",
     "grunt-contrib-clean": "^2.0.0",
